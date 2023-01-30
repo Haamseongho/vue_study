@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vite App</title>
+</head>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<body>
+<div id="app">
+    {{ name }}
+    <my-component></my-component>
+    <my-component2></my-component2>
+    <my-component3></my-component3>
+</div>
+<div id="app2">
+    {{ person.name }} / {{ person.age }}
+    {{ birthDate() }} / {{ nameCheck("haams1") }}
+    <my-component4></my-component4>
+
+    <input v-bind:type="person.type" v-bind:placeholder="person.inputData">
+</div>
+
+<div id="app3">
+    <a :href="getBlogManageInfo('manage')">blog</a>
+    <p>{{ info2.num }}</p>
+    <button v-on:click="btnAddNum(3)">더하기</button>
+    <button v-on:click="btnMinusNum(2)">빼기</button>
+</div>
+<!-- form : reload 방지 -->
+<div id="app4">
+    <form v-on:submit.prevent="submit2">
+        <input v-bind:type="type" v-bind:placeholder="placeholder"> <br/>
+        <button v-bind:type="btnType">{{ submit }}</button>
+    </form>
+</div>
+
+<script>
+    new Vue({
+        el: "#app",
+        data: {
+            name: "haams704"
+        },
+        components: {
+            "my-component": {
+                template: "<div>my Custom Compoent!</div>"
+            },
+            "my-component2": {
+                template: "<div>my Custom Compoent2!</div>"
+            },
+            "my-component3": {
+                template: "<div>my Custom Compoent3!</div>"
+            },
+        }
+    });
+
+    new Vue({
+        el: "#app2",
+        data: {
+            person: {
+                name: "haams",
+                age: 31,
+                inputData: "Hello",
+                type: "text"
+            },
+        },
+        methods: {
+            birthDate: function () {
+                return this.person.name + " 는 " + (this.person.age) + "살 이며, 생일은 " + "1992.07.04 입니다."
+            },
+            nameCheck: function (askName) {
+                return "물어본 이름: " + askName + "과 현재 이름: " + this.person.name + ((askName == this.person.name) ? " 일치" : " 불일치") + "합니다."
+            }
+        },
+        components: {
+            "my-component4": {
+                template: "<div>my Custom Compoent4!</div>"
+            }
+        }
+    });
+
+    new Vue({
+        el: "#app3",
+        data: {
+            info1: {
+                link: "https://haams704.tistory.com/"
+            },
+            info2: {
+                num: 0
+            }
+        },
+        methods: {
+            getBlogManageInfo: function (param) {
+                return this.info1.link + param;
+            },
+            btnAddNum: function (num) {
+                this.info2.num += num;
+            },
+            btnMinusNum: function (num) {
+                this.info2.num -= num;
+            }
+        }
+    });
+
+    new Vue({
+        el: "#app4",
+        data: {
+            submit: "입력완료",
+            type: "text",
+            placeholder : "내용 입력",
+            btnType: "submit"
+        },
+        methods: {
+            submit2(){
+                alert("전송완료");
+                console.log("submit");
+            }
+        }
+    })
+
+</script>
+<script type="module" src="/src/main.js"></script>
+</body>
+
+</html>
